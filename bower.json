@@ -1,0 +1,20 @@
+{
+  "name": "html5-video-analytics",
+  "main": "html5-video-analytics.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/dwoodard/html5-video-analytics",
+  "authors": [
+    "Dustin Woodard <dustinwoodard@weber.edu>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "qunit": "~1.18.0"
+  }
+}
