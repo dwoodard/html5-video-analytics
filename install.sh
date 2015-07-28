@@ -94,60 +94,60 @@ sudo curl -sS https://getcomposer.org/installer | sudo php
 sudo mv composer.phar /usr/local/bin/composer
 
 
-echo "------------------ FFMPEG  ------------------"
-sudo apt-get install -y ffmpeg >> /tmp/install.log 2>&1
-sudo apt-get update >> /tmp/install.log 2>&1
-sudo apt-get install -y libavcodec-extra-52 libavdevice-extra-52 libavfilter-extra-0 libavformat-extra-52 libavutil-extra-49 libpostproc-extra-51 libswscale-extra-0 >> /tmp/install.log 2>&1
-sudo apt-get install -y libavcodec-extra-53 >> /tmp/install.log 2>&1
+# echo "------------------ FFMPEG  ------------------"
+# sudo apt-get install -y ffmpeg >> /tmp/install.log 2>&1
+# sudo apt-get update >> /tmp/install.log 2>&1
+# sudo apt-get install -y libavcodec-extra-52 libavdevice-extra-52 libavfilter-extra-0 libavformat-extra-52 libavutil-extra-49 libpostproc-extra-51 libswscale-extra-0 >> /tmp/install.log 2>&1
+# sudo apt-get install -y libavcodec-extra-53 >> /tmp/install.log 2>&1
 
 echo "------------------ Correct Time  ------------------"
 echo "America/Denver" | sudo tee /etc/timezone
 sudo dpkg-reconfigure --frontend noninteractive tzdata
 
-echo "------------------ INSTALL BEANSTALKD  ------------------"
-echo "------------------ INSTALL SUPERVISORD  ------------------"
-sudo apt-get update >> /tmp/install.log 2>&1
-sudo apt-get install -y beanstalkd >> /tmp/install.log 2>&1
-sudo sed -i "s/.*#START.*/START yes/" /etc/default/beanstalkd
+# echo "------------------ INSTALL BEANSTALKD  ------------------"
+# echo "------------------ INSTALL SUPERVISORD  ------------------"
+# sudo apt-get update >> /tmp/install.log 2>&1
+# sudo apt-get install -y beanstalkd >> /tmp/install.log 2>&1
+# sudo sed -i "s/.*#START.*/START yes/" /etc/default/beanstalkd
 
-sudo apt-get install -y python-setuptools >> /tmp/install.log 2>&1
-sudo easy_install supervisor
-sudo apt-get install -y supervisord >> /tmp/install.log 2>&1
+# sudo apt-get install -y python-setuptools >> /tmp/install.log 2>&1
+# sudo easy_install supervisor
+# sudo apt-get install -y supervisord >> /tmp/install.log 2>&1
 
 
-sudo tee -a /etc/supervisord.conf <<SUPERVISORD
-[supervisord]
-logfile=/tmp/supervisord.log ; (main log file;default $CWD/supervisord.log)
-logfile_maxbytes=50MB        ; (max main logfile bytes b4 rotation;default 50MB)
-logfile_backups=10           ; (num of main logfile rotation backups;default 10)
-loglevel=info                ; (log level;default info; others: debug,warn,trace)
-pidfile=/tmp/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
-nodaemon=false               ; (start in foreground if true;default false)
-minfds=1024                  ; (min. avail startup file descriptors;default 1024)
-minprocs=200                 ; (min. avail process descriptors;default 200)
+# sudo tee -a /etc/supervisord.conf <<SUPERVISORD
+# [supervisord]
+# logfile=/tmp/supervisord.log ; (main log file;default $CWD/supervisord.log)
+# logfile_maxbytes=50MB        ; (max main logfile bytes b4 rotation;default 50MB)
+# logfile_backups=10           ; (num of main logfile rotation backups;default 10)
+# loglevel=info                ; (log level;default info; others: debug,warn,trace)
+# pidfile=/tmp/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
+# nodaemon=false               ; (start in foreground if true;default false)
+# minfds=1024                  ; (min. avail startup file descriptors;default 1024)
+# minprocs=200                 ; (min. avail process descriptors;default 200)
 
-[program:laravel]
-command=sudo php artisan queue:listen --timeout=14400
-process_name=%(program_name)s%(process_num)s
-numprocs=2
-numprocs_start=2
-directory=/vagrant
-autostart=true
-autorestart=true
-exitcodes=2
-user=root
+# [program:laravel]
+# command=sudo php artisan queue:listen --timeout=14400
+# process_name=%(program_name)s%(process_num)s
+# numprocs=2
+# numprocs_start=2
+# directory=/vagrant
+# autostart=true
+# autorestart=true
+# exitcodes=2
+# user=root
 
-[program:beanstalkdService]
-command=sudo beanstalkd -l 127.0.0.1 -p 11300
-process_name=%(program_name)s%(process_num)s
-numprocs=1
-numprocs_start=1
-directory=/
-autostart=true
-autorestart=true
-exitcodes=2
-user=root
-SUPERVISORD
+# [program:beanstalkdService]
+# command=sudo beanstalkd -l 127.0.0.1 -p 11300
+# process_name=%(program_name)s%(process_num)s
+# numprocs=1
+# numprocs_start=1
+# directory=/
+# autostart=true
+# autorestart=true
+# exitcodes=2
+# user=root
+# SUPERVISORD
 
 
 echo "------------------ Vagrant VirtualHost. ------------------"
