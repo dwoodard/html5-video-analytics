@@ -1,2 +1,5 @@
 /.vagrant
 .idea
+/node_modules
+/public/bower
+/npm-debug.log
