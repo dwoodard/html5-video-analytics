@@ -1,8 +1,27 @@
-QUnit.module("group a");
-QUnit.test("Create va object", function( assert ) {
+QUnit.module("Init");
+test("va()", function( assert ) {
+    var videoEl = document.createElement("video");
 
-	assert.ok(va());
-	assert.ok(va.get('video'));
-	console.log(va.get('video'))
-	assert.ok(va.get('video'));
+	// Basic constructor's behavior
+	assert.ok(va, "va");
+	assert.ok(va(), "va()");
+	assert.ok(va(['test']), "va(['test'])");
+
+	// assert.equal(va(), {}, 'message');
+
 });
+
+
+
+
+
+QUnit.module("Events");
+test('test',  function( assert ) {
+
+    ok( 1 == 1, 'one equals one');
+})
+
+QUnit.module("Functions");
+test('assertions',  function( assert ) {
+    ok( 1 == 1, 'one equals one');
+})
