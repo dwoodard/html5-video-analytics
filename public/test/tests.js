@@ -1,13 +1,16 @@
 QUnit.module("Init");
 test("va()", function( assert ) {
     var videoEl = document.createElement("video");
-    console.log(document.body.getElementsByTagName("video"))
 	// Basic constructor's behavior
 	assert.ok(va, "va");
-	assert.ok(va, "va");
-	assert.ok(va(), "va()");
-	assert.ok(va('[id]'), "va(['test'])");
-	assert.ok(va('[class]'), "va(['test'])");
+	assert.ok(va.version, "va.version");
+	assert.notOk(va(), "va()");
+	assert.ok(va({}), "va({})");
+	assert.ok(va('test'), "va('test')");
+	assert.equal(va('test1, #test2, .test3'), ["test1","#test2",".test3"], "va('test1, #test2, .test3')");
+	assert.equal(va('#id'), ['#id'], "va('#id')");
+	assert.equal(va('.class'), ['.class'], "va('.class')");
+	assert.equal(va.version, "1.0.0");
 
 	// assert.equal(va(), , 'message');
 

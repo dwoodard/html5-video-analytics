@@ -6,35 +6,37 @@
  */
 
 
-;
-(function (window) {
-    'use strict'
-    function defineVA() {
-        var va;
-        va = function (selectors) {
-            va.videos = document.body.getElementsByTagName(selectors);
-        };
+;(function(window){
+    window.va = function(selector){return va.fn.init(selector)};
+    va.version = "1.0.0";
+    va.fn = {
+        init: function(selector){
+            if (selector === 'undefined') {
+                return [];
+            };
 
-        va.version = "0.0.0";
+            if (typeof arguments[0] === 'object') {
 
-        va.events = {};
-
-
-        // set the default log handlers
-        //va.log = function () { console.log.apply(console, arguments); }
-        //va.warn = function () { console.warn.apply(console, arguments); }
-        //va.error = function () { console.error.apply(console, arguments); }
+                return [];
 
 
-        va.prototype.videos = {}
+            };
 
-        return va
-    }
+            if (typeof arguments[0] === 'string') {
 
-    if (typeof(va) === 'undefined') {
-        window.va = defineVA()
-    }
+                var arg = arguments[0].replace(/\s/g,"")
+
+
+            };
+
+            return arg;
+        }
+    };
+
+    
 })(window);
+
+
 
 
 
