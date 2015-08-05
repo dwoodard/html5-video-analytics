@@ -8,17 +8,25 @@
 // });
 
 QUnit.module("Init");
+
 test("va()", function (assert) {
-    var videoEl = document.createElement("video");
+    var videoEl1 = document.createElement("video");
+    var videoEl2 = document.createElement("video");
+    var videoEl3 = document.createElement("video");
+    document.body.appendChild(videoEl1);
+    document.body.appendChild(videoEl2);
+    document.body.appendChild(videoEl3);
+    //console.log(document.querySelectorAll('#video2'));
+    videoEl2.id = "video2";
+    videoEl3.className = "video3";
     // Basic constructor's behavior
     assert.ok(va, "va");
     assert.ok(va.version, "va.version: " + va.version);
-    assert.deepEqual(va(videoEl), [videoEl.outerHTML] );
-    assert.equal(va({'video': 'test'}), [{'video': 'test'}]);
-    assert.equal(va(['video', 'test']), ['video', 'test']);
-    assert.equal(va('video1, #video2, .video3'), ["video1", "#video2", ".video3"], "va('video1, #video2, .video3')");
-    assert.equal(va('#id'), ['#id'], "va('#id')");
-    assert.equal(va('.class'), ['.class'], "va('.class')");
+    assert.deepEqual(va(['video', '#video2', '.video3']), [videoEl1, videoEl2,videoEl3]);
+    assert.equal(va('#video2'), [videoEl2], "va('#id')");
+    assert.equal(va('.video3'), [videoEl3], "va('.class')");
+
+
 });
 
 

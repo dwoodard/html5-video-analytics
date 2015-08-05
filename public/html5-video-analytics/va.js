@@ -14,58 +14,31 @@
     va.version = "1.0.0";
     va.fn = {
         init: function (selector) {
-            var isArray = Array.isArray(selector[0]),
-                isString = typeof selector[0] === 'string',
-                isObject = typeof selector[0] === 'Object',
-                type,
+            var type,
                 elements = [];
 
-            console.log(selector, typeof selector[0], selector[0],"Array:"+isArray,"String:"+isString,"Object:"+isObject);
-
-
-            // switch(type){
-            //     // case "Array":
-            //     // break;
-            //     // case "Object":
-            //     // break;
-            //     default:
-            //     break;
-            // }
-
-            for (var i = 0; i < selector.length; i++) {
-                elements.push(selector[i])
+            if (typeof selector[0] === "object") {
+                type = Array.isArray(selector[0]) ? "array" : "";
             }
+            if (typeof selector[0] === 'string') type = "string";
 
+
+            switch (type) {
+                case "array":
+                    for (var i = 0; i < selector[0].length; i++) {
+                        if (typeof selector[0][i] !== "string") continue;
+                        elements.push(document.querySelectorAll(selector[0][i])[0]);
+                    }
+                    //console.log(type, selector[0], elements);
+                    break;
+                case "string":
+                    //console.log(selector, document.querySelectorAll(selector[0])[0])
+                    var el = document.querySelectorAll(selector[0]);
+                    elements.push(el[0]);
+                    break;
+            }
+            console.log(type, elements);
             return elements;
-
-
-            // for (var i = 0; i < selector.length; i++) {
-            //     if (typeof selector[i] === 'Object' && Array.isArray(selector[i])) {
-            //         return [selector[i]]
-            //     };
-
-            //     if (typeof selector[i] === 'string' && Array.isArray(selector[i])) {
-            //         var arg = selector[i].replace(/\s/g,"");
-            //         var hasComma = !(arg.indexOf(',') === -1);
-            //         if (hasComma) {
-            //             arg = arg.split(',')
-            //             elements.push(arg)
-            //         }else{
-            //             return arg
-            //         }
-            //     };
-
-            // };
-
-
-            // if (!va.fn.isEmpty(selector) ||
-            //     selector === 'undefined' ||
-            //     arguments.length === 0) {
-            //     return [];
-            // };
-
-
-            // return arg;
         },
         isEmpty: function (obj) {
             var hasOwnProperty = Object.prototype.hasOwnProperty;
