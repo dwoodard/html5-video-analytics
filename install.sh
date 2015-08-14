@@ -29,11 +29,11 @@ sudo apt-get install -y php5 apache2 libapache2-mod-php5 php5-curl php5-gd php5-
 echo "------------------ Installing and configuring Xdebug ------------------"
 sudo apt-get install -y php5-xdebug >> /tmp/install.log 2>&1
 
-cat << EOF | sudo tee -a /etc/php5/mods-available/xdebug.ini
-xdebug.scream=1
-xdebug.cli_color=1
-xdebug.show_local_vars=1
-EOF
+# cat << EOF | sudo tee -a /etc/php5/mods-available/xdebug.ini
+# xdebug.scream=1
+# xdebug.cli_color=1
+# xdebug.show_local_vars=1
+# EOF
 
 
 echo "------------------ Enabling mod-rewrite ------------------"
@@ -183,24 +183,23 @@ sudo a2enmod ssl >> /tmp/install.log 2>&1
 
 
 
-sudo wget -O /etc/init.d/beanstalkd https://gist.github.com/dwoodard/8257582/raw/73ece556fa468d4ac05deb75b0246c3cfa00abcb/beanstalkd.init.sh
-sudo wget -O /etc/init.d/supervisord https://raw.github.com/dwoodard/beanstalkd/master/etc-init.d-supervisord
+# sudo wget -O /etc/init.d/beanstalkd https://gist.github.com/dwoodard/8257582/raw/73ece556fa468d4ac05deb75b0246c3cfa00abcb/beanstalkd.init.sh
+# sudo wget -O /etc/init.d/supervisord https://raw.github.com/dwoodard/beanstalkd/master/etc-init.d-supervisord
 
-sudo chmod +x /etc/init.d/supervisord
-sudo update-rc.d supervisord defaults
+# sudo chmod +x /etc/init.d/supervisord
+# sudo update-rc.d supervisord defaults
 
-sudo service supervisord start
-sudo service apache2 restart
+# sudo service supervisord start
+# sudo service apache2 restart
 
 
-echo "------------------ FTP SETUP. ------------------"
-sudo apt-get install vsftpd
-# sudo sed -i "s/.*#chroot_local_user=YES/chroot_local_user=YES/" /etc/vsftpd.conf
-sudo mkdir /vagrant/ics
-sudo chmod a-w /vagrant/ics/
-sudo chown ftp:ftp /vagrant/ics/
-sudo usermod -d /vagrant/ics ftp
-sudo /etc/init.d/vsftpd restart
+# echo "------------------ FTP SETUP. ------------------"
+# sudo apt-get install vsftpd
+# sudo mkdir /vagrant/ics
+# sudo chmod a-w /vagrant/ics/
+# sudo chown ftp:ftp /vagrant/ics/
+# sudo usermod -d /vagrant/ics ftp
+# sudo /etc/init.d/vsftpd restart
 
 
 echo "------------------ TMUX. ------------------"
