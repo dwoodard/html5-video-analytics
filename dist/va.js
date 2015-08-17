@@ -1,14 +1,4 @@
 /*
- __     ___     _                 _                _       _   _
- \ \   / (_) __| | ___  ___      / \   _ __   __ _| |_   _| |_(_) ___ ___
- \ \ / /| |/ _` |/ _ \/ _ \    / _ \ | '_ \ / _` | | | | | __| |/ __/ __|
- \ V / | | (_| |  __/ (_) |  / ___ \| | | | (_| | | |_| | |_| | (__\__ \
- \_/  |_|\__,_|\___|\___/  /_/   \_\_| |_|\__,_|_|\__, |\__|_|\___|___/
- |___/
- */
-
-
-/*
  USAGE:
 
  //javascript
@@ -18,28 +8,52 @@
 
 ;
 (function (window) {
-    'use strict'
+    window.va = function (selector) {
+        return new va.fn.init(arguments)
+    };
+    va.version = "1.0.0";
+    va.fn = {
+        init: function (selector) {
+            var type,
+                elements = [];
 
-    function defineVA() {
-        va.fn.init = function(selector){ return selector };
-        va = function (selector) { return new va.init(selector) };
-        va.version = "0.0.0";
-        va.init.init = function(obj){};
-        va.videos = [];
-        va.events = {}; 
+            if (typeof selector[0] === "object") {
+                type = Array.isArray(selector[0]) ? "array" : "";
+            }
+            if (typeof selector[0] === 'string') type = "string";
 
 
-        // set the default log handlers
-        va.log = function () { console.log.apply(console, arguments); };
-        va.warn = function () { console.warn.apply(console, arguments); };
-        va.error = function () { console.error.apply(console, arguments); };
+            switch (type) {
+                case "array":
+                    for (var i = 0; i < selector[0].length; i++) {
+                        if (typeof selector[0][i] !== "string") continue;
+                        elements.push(document.querySelectorAll(selector[0][i])[0]);
+                    }
+                    //console.log(type, selector[0], elements);
+                    break;
+                case "string":
+                    //console.log(selector, document.querySelectorAll(selector[0])[0])
+                    var el = document.querySelectorAll(selector[0]);
+                    elements.push(el[0]);
+                    break;
+            }
+            console.log(type, elements);
+            return elements;
+        },
+        isEmpty: function (obj) {
+            var hasOwnProperty = Object.prototype.hasOwnProperty;
+            if (obj == null) return true;
+            if (obj.length > 0)    return false;
+            if (obj.length === 0)  return true;
 
-        va.prototype.videos = {};
+            for (var key in obj) {
+                if (hasOwnProperty.call(obj, key)) return false;
+            }
 
-        return va;
-    }
-
-    if (typeof(va) === 'undefined') {
-        window.va = defineVA()
+            return true;
+        }
+    };
+    if (typeof va === 'undefined') {
+        return new va()
     }
 })(window);

@@ -23,10 +23,8 @@ test("va()", function (assert) {
     assert.ok(va, "va");
     assert.ok(va.version, "va.version: " + va.version);
     assert.deepEqual(va(['video', '#video2', '.video3']), [videoEl1, videoEl2,videoEl3]);
-    assert.equal(va('#video2'), [videoEl2], "va('#id')");
-    assert.equal(va('.video3'), [videoEl3], "va('.class')");
-
-
+    assert.deepEqual(va('#video2'), [videoEl2], "va('#id')");
+    assert.deepEqual(va('.video3'), [videoEl3], "va('.class')");
 });
 
 
