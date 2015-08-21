@@ -19,6 +19,7 @@ test("va()", function (assert) {
     //console.log(document.querySelectorAll('#video2'));
     videoEl2.id = "video2";
     videoEl3.className = "video3";
+
     // Basic constructor's behavior
     assert.ok(va, "va");
     assert.ok(va.version, "va.version: " + va.version);
@@ -28,10 +29,25 @@ test("va()", function (assert) {
 });
 
 
-QUnit.module("Events");
-test('test', function (assert) {
+QUnit.module("Video Events");
+test('addEventListener', function (assert) {
 
-    ok(1 == 1, 'one equals one');
+    // ok(1 == 1, 'one equals one');
+
+
+    var done = assert.async();
+    var input = $( "#test-input" ).focus();
+    setTimeout(function() {
+        var el1 = document.createElement("video");
+        document.body.appendChild(el1);
+        console.log(el1)
+        ok(!!el1.click, "videoEl1.click" )
+
+        done();
+    });
+
+
+
 })
 
 QUnit.module("Functions");

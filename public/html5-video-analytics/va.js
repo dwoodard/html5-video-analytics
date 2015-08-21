@@ -12,7 +12,7 @@
         return new va.fn.init(arguments)
     };
     va.version = "1.0.0";
-    va.elements = [];
+    va.controllers = [];
     va.fn = {
         init: function (selector) {
             var type;
@@ -38,20 +38,23 @@
                     va.elements.push(el[0]);
                     break;
             }
-            console.log(type, va.elements);
+
+            // console.log(type, va.elements);
+
+            //addEventListener
+            va.fn.addEventListeners(va.elements)
+
             return va.elements;
         },
-        isEmpty: function (obj) {
-            var hasOwnProperty = Object.prototype.hasOwnProperty;
-            if (obj == null) return true;
-            if (obj.length > 0)    return false;
-            if (obj.length === 0)  return true;
+        addEventListeners: function(elements){
+            for (var i = 0; i < va.elements.length; i++) {
+                var el = elements[i];
+                if (!el) {continue}
 
-            for (var key in obj) {
-                if (hasOwnProperty.call(obj, key)) return false;
-            }
-
-            return true;
+                // el.addEventListener('click', function(e){
+                //     console.log(e.target.id, e);
+                // })
+            };
         }
     };
     if (typeof va === 'undefined') {
