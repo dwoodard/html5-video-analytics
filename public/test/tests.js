@@ -24,7 +24,7 @@ QUnit.module("Init", {
     },
     afterEach: function() {
         // clean up after each test
-        $([videoEl1, videoEl2, videoEl3]).remove();
+        // $([videoEl1, videoEl2, videoEl3]).remove();
     }
 });
 

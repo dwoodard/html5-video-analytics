@@ -53,8 +53,56 @@
                 if (!el) {continue}
 
                 el.addEventListener('click', function(e){
-                    console.log(e.target.id, e);
+                    console.log(e.type, e);
                 })
+
+                el.addEventListener('emptied', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('loadedmetadata', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('loadeddata', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('canplay', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('canplaythrough', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('playing', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('ended', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('waiting', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('ended', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('durationchange', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('timeupdate', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('play', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('pause', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('ratechange', function(e){
+                    console.log(e.type, e);
+                })
+                el.addEventListener('volumechange', function(e){
+                    console.log(e.type, e);
+                })
+
+
             };
         }
     };
