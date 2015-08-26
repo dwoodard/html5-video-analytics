@@ -8,6 +8,7 @@
 
 ;
 (function (window) {
+    "use strict";
     window.va = function (selector) {
         return new va.fn.init(arguments)
     };
@@ -51,9 +52,9 @@
                 var el = elements[i];
                 if (!el) {continue}
 
-                // el.addEventListener('click', function(e){
-                //     console.log(e.target.id, e);
-                // })
+                el.addEventListener('click', function(e){
+                    console.log(e.target.id, e);
+                })
             };
         }
     };
