@@ -13,15 +13,21 @@
         return new va.fn.init(arguments)
     };
     va.version = "1.0.0";
-    va.controllers = [];
+    va.players = [];
+    va.videos = {}; 
     va.fn = {
         init: function (selector) {
             var type;
-            va.elements = [];
 
             if (typeof selector[0] === "object") {
-                type = Array.isArray(selector[0]) ? "array" : "";
+                type = "object"
+
+                if (Array.isArray(selector[0])) {
+                    type = Array.isArray(selector[0]) ? "array" : "";
+                }
+
             }
+
             if (typeof selector[0] === 'string') type = "string";
 
 
@@ -29,32 +35,40 @@
                 case "array":
                     for (var i = 0; i < selector[0].length; i++) {
                         if (typeof selector[0][i] !== "string") continue;
-                        va.elements.push(document.querySelectorAll(selector[0][i])[0]);
+                        var item = document.querySelectorAll(selector[0][i])[0];
+                        if (va.players.indexOf(item)) {
+                            va.players.push(item);
+                        };
                     }
                     //console.log(type, selector[0], elements);
                     break;
                 case "string":
                     //console.log(selector, document.querySelectorAll(selector[0])[0])
                     var el = document.querySelectorAll(selector[0]);
-                    va.elements.push(el[0]);
+                        if (!va.players.indexOf(el[0])) {
+                            va.players.push(el[0]);
+                        };
+
+                    break;
+                    case "object":
+                        if (va.players.indexOf(selector[0])) {
+                            va.players.push(selector[0]);
+                        };
+
                     break;
             }
 
-            // console.log(type, va.elements);
+            // console.log(type, va.players);
 
             //addEventListener
-            va.fn.addEventListeners(va.elements)
+            va.fn.addEventListeners(va.players)
 
-            return va.elements;
+            return va.players;
         },
         addEventListeners: function(elements){
-            for (var i = 0; i < va.elements.length; i++) {
+            for (var i = 0; i < va.players.length; i++) {
                 var el = elements[i];
                 if (!el) {continue}
-
-                el.addEventListener('click', function(e){
-                    console.log(e.type, e);
-                })
 
                 el.addEventListener('emptied', function(e){
                     console.log(e.type, e);
