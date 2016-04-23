@@ -5,7 +5,7 @@ var notify = require('gulp-notify');
 var gutil = require('gulp-util');
 var rename = require('gulp-rename');
 var concat = require('gulp-concat');
-var cssshrink = require('gulp-cssshrink');
+var cssnano = require('gulp-cssnano');
 var browserify = require('gulp-browserify');
 
 // var exec = require('child_process').exec;
@@ -20,7 +20,7 @@ gulp.task('css', function(){
     .pipe(autoprefixer('last 20 versions'))
     .pipe(minifyCSS({keepBreaks:true,keepSpecialComments: '1',processImport:true}))
     .pipe(concat('all.css'))
-    .pipe(cssshrink())
+    .pipe(cssnano())
     .pipe(gulp.dest(targetCSSDir))
     .pipe(notify({message: 'CSS prefixed and minified to all.css'}))
     });

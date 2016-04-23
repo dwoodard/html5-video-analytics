@@ -174,7 +174,7 @@ sudo tee -a /etc/apache2/sites-available/hva.conf <<VIRTUALHOST
 VIRTUALHOST
 
 echo "------------------ Make CERT. ------------------"
-sudo openssl req -new -newkey rsa:4096 -days 3652 -nodes -x509 -subj "/C=US/ST=UT/L=Ogden/O=IT/CN=dev.media.weber.edu" -keyout /var/www/server.pem  -out /var/www/server.cert
+sudo openssl req -new -newkey rsa:4096 -days 3652 -nodes -x509 -subj "/C=US/ST=UT/L=Ogden/O=IT/CN=dev.weber.edu" -keyout /var/www/server.pem  -out /var/www/server.cert
 
 sudo a2ensite hva.conf
 
@@ -203,4 +203,4 @@ sudo a2enmod ssl >> /tmp/install.log 2>&1
 
 
 echo "------------------ TMUX. ------------------"
-sudo apt-get install tmux
+# sudo apt-get install tmux

@@ -76,7 +76,7 @@
 
 
             }
-        }
+        },
     };
     if (typeof va === 'undefined') {
         //noinspection JSPotentiallyInvalidConstructorUsage
