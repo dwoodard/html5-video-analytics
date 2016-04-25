@@ -36,7 +36,6 @@ test("Basic requirements", function () {
 
 QUnit.module("Init", beforeAfter);
 test("va()", function (assert) {
-
     // Basic constructor's behavior
     assert.ok(va, "va");
     assert.ok(va.version, "va.version: " + va.version);
@@ -46,26 +45,30 @@ test("va()", function (assert) {
     assert.deepEqual(va('.video3'), [videoEl1, videoEl2, videoEl3], "va('.class')");
     assert.deepEqual(va('.video3'), [videoEl1, videoEl2, videoEl3], "va('.class') again, Should not add a second time");
     assert.deepEqual(va(videoEl4), [videoEl1, videoEl2, videoEl3, videoEl4], "va({object})");
-    assert.ok(va.players.length == 4, "total players should be 4")
-
+    assert.ok(va.players.length == 4, "total players should be 4");
 });
 
-// QUnit.module("Schema");
-// test('compare schema', function (assert) {
-//    assert.deepEqual(va.videos, [
-//        {
-//            "id":"[url]"
-//        }
-//    ]);
-// });
+QUnit.module("Schema");
+
+test('compare schema', function (assert) {
+   assert.deepEqual(va.videos,va.videos);
+});
+
+test('compare schema 2', function (assert) {
+   assert.deepEqual(va.videos,va.videos);
+});
+
+test('compare schema 3', function (assert) {
+   assert.deepEqual(va.videos,va.videos);
+});
 
 
 QUnit.module("Video Events", beforeAfter);
 
 test('addEventListener', function (assert) {
-    assert.expect(8);
+    assert.expect(9);
 
-    // var emptied = assert.async();
+    var emptied = assert.async();
     var durationchange = assert.async();
     var loadedmetadata = assert.async();
     var loadeddata = assert.async();
@@ -85,18 +88,23 @@ test('addEventListener', function (assert) {
     setTimeout(function () {
         assert.equal(Math.floor(videoEl1.duration), 11, 'duration is 11 seconds')
     }, 1000);
+
     setTimeout(function () {
         videoEl1.volume = .05;
     }, 300);
+
     setTimeout(function () {
         videoEl1.playbackRate = 2;
     }, 1000);
+
     setTimeout(function () {
         videoEl1.pause();
     }, 4250);
+
     setTimeout(function () {
         videoEl1.play();
     }, 4800);
+
 
 
     $(videoEl1).on("loadedmetadata", function () {
@@ -143,11 +151,8 @@ test('addEventListener', function (assert) {
         playing2();
         pause2();
         $(videoEl1).remove();
-        $(".tc-videoController").remove()
+        $(".tc-videoController").remove();
     });
-
-
 });
-
 
 

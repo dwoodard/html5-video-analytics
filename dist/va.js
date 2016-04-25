@@ -1,59 +1,86 @@
 /*
- USAGE:
-
+ USAGE: point va() to html5 players
  //javascript
  va('#video,video,.video')
  */
-
-
-;
-(function (window) {
+; (function (window) {
+    "use strict";
     window.va = function (selector) {
+        //noinspection JSPotentiallyInvalidConstructorUsage
         return new va.fn.init(arguments)
     };
     va.version = "1.0.0";
+    va.players = [];
+    va.videos = [];
     va.fn = {
         init: function (selector) {
-            var type,
-                elements = [];
-
-            if (typeof selector[0] === "object") {
-                type = Array.isArray(selector[0]) ? "array" : "";
-            }
-            if (typeof selector[0] === 'string') type = "string";
-
-
-            switch (type) {
-                case "array":
+            switch (Object.prototype.toString.call(selector[0])) {
+                case "[object Array]":
                     for (var i = 0; i < selector[0].length; i++) {
                         if (typeof selector[0][i] !== "string") continue;
-                        elements.push(document.querySelectorAll(selector[0][i])[0]);
+                        var item = document.querySelectorAll(selector[0][i])[0];
+                        if (va.players.indexOf(item)) {
+                            va.players.push(item);
+                        }
                     }
-                    //console.log(type, selector[0], elements);
                     break;
-                case "string":
-                    //console.log(selector, document.querySelectorAll(selector[0])[0])
+                case "[object String]":
                     var el = document.querySelectorAll(selector[0]);
-                    elements.push(el[0]);
+                    if (!va.players.indexOf(el[0])) {
+                        va.players.push(el[0]);
+                    }
+                    break;
+                case "[object HTMLVideoElement]":
+                    if (va.players.indexOf(selector[0])) {
+                        va.players.push(selector[0]);
+                    }
                     break;
             }
-            console.log(type, elements);
-            return elements;
+
+            //addEventListener
+            va.fn.addEventListeners(va.players);
+
+            return va.players;
         },
-        isEmpty: function (obj) {
-            var hasOwnProperty = Object.prototype.hasOwnProperty;
-            if (obj == null) return true;
-            if (obj.length > 0)    return false;
-            if (obj.length === 0)  return true;
+        addEventListeners: function (elements) {
+            for (var i = 0; i < va.players.length; i++) {
+                var el = elements[i];
+                if (!el) {
+                    continue
+                }
 
-            for (var key in obj) {
-                if (hasOwnProperty.call(obj, key)) return false;
+                var events = [
+                    "emptied",
+                    "loadstart",
+                    "loadedmetadata",
+                    "loadeddata",
+                    "canplay",
+                    "canplaythrough",
+                    "playing",
+                    "ended",
+                    "waiting",
+                    "ended",
+                    "durationchange",
+                    "timeupdate",
+                    "play",
+                    "pause",
+                    "ratechange",
+                    "volumechange"
+                ];
+
+                events.forEach(function (event) {
+                    el.addEventListener(event, function (e) {
+                        // console.log(e.type, e);
+                    });
+                });
+
+
             }
-
-            return true;
-        }
+        },
     };
-    if (typeof va === 'undefined') {
-        return new va()
-    }
-})(window);
+    // if (typeof va === 'undefined') {
+    //     //noinspection JSPotentiallyInvalidConstructorUsage
+    //     return new va()
+    // }
+
+})(window); 

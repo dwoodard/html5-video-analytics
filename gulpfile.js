@@ -12,28 +12,29 @@ var browserify = require('gulp-browserify');
 // var sys = require('sys');
 
 
-var targetCSSDir = './public/min/';
-var targetJSDir =  './public/js/';
+//var targetCSSDir = './public/min/';
+//var targetJSDir =  './public/js/';
 
-gulp.task('css', function(){
-    return gulp.src('./public/css/base.css')
-    .pipe(autoprefixer('last 20 versions'))
-    .pipe(minifyCSS({keepBreaks:true,keepSpecialComments: '1',processImport:true}))
-    .pipe(concat('all.css'))
-    .pipe(cssnano())
-    .pipe(gulp.dest(targetCSSDir))
-    .pipe(notify({message: 'CSS prefixed and minified to all.css'}))
-    });
+//gulp.task('css', function(){
+//    return gulp.src('./public/css/base.css')
+//    .pipe(autoprefixer('last 20 versions'))
+//    .pipe(minifyCSS({keepBreaks:true,keepSpecialComments: '1',processImport:true}))
+//    .pipe(concat('all.css'))
+//    .pipe(cssnano())
+//    .pipe(gulp.dest(targetCSSDir))
+//    .pipe(notify({message: 'CSS prefixed and minified to all.css'}))
+//    });
 
 gulp.task('js', function(){
-   return gulp.src(['public/html5-video-analytics/va.js'])
-   .pipe(gulp.dest('./dist/'))
-   .pipe(notify({message: 'Js browserified and Renamed to bundle.js'}))
-   });
+ return gulp.src(['public/html5-video-analytics/va.js'])
+ .pipe(gulp.dest('./dist/'))
+ .pipe(notify({message: 'Js browserified and Renamed to test.js'}))
+ .pipe(notify("Found file: <%= file.relative %>!"))
+ });
 
 gulp.task('watch', function(){
-    gulp.watch('public/css/**/*.css', ['css']);
-    gulp.watch('public/html5-video-analytics/**/*.js', ['js']);
-    });
+  gulp.watch('public/css/**/*.css', ['css']);
+  gulp.watch('public/html5-video-analytics/**/*.js', ['js']);
+  });
 
 gulp.task('default', ['watch']);

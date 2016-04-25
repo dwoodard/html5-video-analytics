@@ -70,7 +70,7 @@
 
                 events.forEach(function (event) {
                     el.addEventListener(event, function (e) {
-                        console.log(e.type, e);
+                        // console.log(e.type, e);
                     });
                 });
 
@@ -78,9 +78,9 @@
             }
         },
     };
-    if (typeof va === 'undefined') {
-        //noinspection JSPotentiallyInvalidConstructorUsage
-        return new va()
-    }
+    // if (typeof va === 'undefined') {
+    //     //noinspection JSPotentiallyInvalidConstructorUsage
+    //     return new va()
+    // }
 
-})(window);
+})(window); 
