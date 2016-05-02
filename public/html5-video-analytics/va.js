@@ -26,9 +26,17 @@
                     break;
                 case "[object String]":
                     var el = document.querySelectorAll(selector[0]);
-                    if (!va.players.indexOf(el[0])) {
-                        va.players.push(el[0]);
+
+                    for (var i = 0; i < el.length; i++) {
+
+                        if (Object.prototype.toString.call(el[i]) === "[object HTMLVideoElement]"
+                            && true) {
+                            va.players.push(el[i]);
+                        }
+
                     }
+                            console.log(va.players);
+
                     break;
                 case "[object HTMLVideoElement]":
                     if (va.players.indexOf(selector[0])) {
@@ -41,6 +49,11 @@
             va.fn.addEventListeners(va.players);
 
             return va.players;
+        },
+        emptyPlayers: function(){
+            va.players = [];
+            return va.players;
+
         },
         addEventListeners: function (elements) {
             for (var i = 0; i < va.players.length; i++) {
@@ -83,4 +96,4 @@
     //     return new va()
     // }
 
-})(window); 
+})(window);

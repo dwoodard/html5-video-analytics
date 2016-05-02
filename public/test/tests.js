@@ -2,14 +2,18 @@ var videoEl1 = document.createElement("video");
 var videoEl2 = document.createElement("video");
 var videoEl3 = document.createElement("video");
 var videoEl4 = document.createElement("video");
+var videoEl5 = document.createElement("video");
+var div1 = document.createElement("div");
 
 var beforeAfter = {
     beforeEach: function () {
         // prepare something for all following tests
         document.body.appendChild(videoEl1);
         document.body.appendChild(videoEl2);
+        document.body.appendChild(div1); //add diversity to dom, seperate with a div
         document.body.appendChild(videoEl3);
         document.body.appendChild(videoEl4);
+        document.body.appendChild(videoEl5);
 
         //console.log(document.querySelectorAll('#video2'));
 
@@ -24,13 +28,15 @@ var beforeAfter = {
     }
 };
 
-test("Basic requirements", function () {
+QUnit.module("Browser requirements", beforeAfter);
+test("Native functions", function () {
     ok(Array.prototype.push, "Has Array.push()");
     ok(Function.prototype.apply, "Has Function.apply()");
     ok(document.getElementById, "Has getElementById");
     ok(document.getElementsByTagName, "Has getElementsByTagName");
     ok(document.querySelectorAll, "Has document.querySelectorAll");
     ok(RegExp, "Has RegExp");
+    ok(["test"].indexOf(0), 'Has ["test"].indexOf(0)');
 });
 
 
@@ -39,6 +45,42 @@ test("va()", function (assert) {
     // Basic constructor's behavior
     assert.ok(va, "va");
     assert.ok(va.version, "va.version: " + va.version);
+});
+
+
+test("va() - Basic constructor's behavior: va('video')", function (assert) {
+    // Basic constructor's behavior
+    assert.deepEqual(va('video'), [videoEl1, videoEl2, videoEl3, videoEl4, videoEl5]);
+    assert.ok(va.players.length == 5, "total players should be 5");
+});
+
+
+
+
+// QUnit.module("Init Object", beforeAfter);
+test("va() - Array", function (assert) {
+    // Basic constructor's behavior
+    
+    assert.deepEqual(va(['video', '#video2', '.video3']), [videoEl1, videoEl2, videoEl3]);
+    assert.ok(va.players.length == 3, "total players should be 3");
+    // assert.deepEqual(va('#video2'), [videoEl1, videoEl2, videoEl3], "va('#id')");
+    // assert.deepEqual(va('.video3'), [videoEl1, videoEl2, videoEl3], "va('.class')");
+    // assert.deepEqual(va('.video3'), [videoEl1, videoEl2, videoEl3], "va('.class') again, Should not add a second time");
+    // assert.deepEqual(va(videoEl4), [videoEl1, videoEl2, videoEl3, videoEl4], "va({object})");
+    // assert.ok(va.players.length == 4, "total players should be 4");
+});
+
+// QUnit.module("Init Array", beforeAfter);
+test("va()", function (assert) {
+    // Basic constructor's behavior
+    assert.deepEqual(va(['video', '#video2', '.video3', videoEl4]), [videoEl1, videoEl2, videoEl3, videoEl4]);
+    assert.ok(va.players.length == 4, "total players should be 4");
+
+});
+
+// QUnit.module("Init All", beforeAfter);
+test("va()", function (assert) {
+    // Basic constructor's behavior
     assert.deepEqual(va(['video', '#video2', '.video3']), [videoEl1, videoEl2, videoEl3]);
     assert.ok(va.players.length == 3, "total players should be 3");
     assert.deepEqual(va('#video2'), [videoEl1, videoEl2, videoEl3], "va('#id')");
@@ -48,19 +90,12 @@ test("va()", function (assert) {
     assert.ok(va.players.length == 4, "total players should be 4");
 });
 
-QUnit.module("Schema");
 
-test('compare schema', function (assert) {
-   assert.deepEqual(va.videos,va.videos);
-});
+// QUnit.module("Schema");
 
-test('compare schema 2', function (assert) {
-   assert.deepEqual(va.videos,va.videos);
-});
-
-test('compare schema 3', function (assert) {
-   assert.deepEqual(va.videos,va.videos);
-});
+// test('compare schema', function (assert) {
+//    assert.deepEqual(va,va);
+// });
 
 
 QUnit.module("Video Events", beforeAfter);
@@ -154,5 +189,6 @@ test('addEventListener', function (assert) {
         $(".tc-videoController").remove();
     });
 });
+
 
 
