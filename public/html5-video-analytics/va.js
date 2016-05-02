@@ -17,17 +17,22 @@
             switch (Object.prototype.toString.call(selector[0])) {
                 case "[object Array]":
                     for (var i = 0; i < selector[0].length; i++) {
+
                         if (typeof selector[0][i] !== "string") continue;
-                        var item = document.querySelectorAll(selector[0][i])[0];
-                        if (va.players.indexOf(item)) {
-                            va.players.push(item);
+
+                        var el = document.querySelectorAll(selector[0][i])[0];
+
+                        if (va.players.indexOf(el)) {
+                            va.players.push(el);
                         }
                     }
                     break;
                 case "[object String]":
                     var el = document.querySelectorAll(selector[0]);
-
-                    for (var i = 0; i < el.length; i++) {
+                    if(el.length !== va.players.length){
+                        console.log("obj");
+                        for (var i = 0; i < el.length; i++) {
+                        console.log("players el == video player:", el === va.players[i]);
 
                         if (Object.prototype.toString.call(el[i]) === "[object HTMLVideoElement]"
                             && true) {
@@ -35,7 +40,10 @@
                         }
 
                     }
-                            console.log(va.players);
+                    }
+
+
+
 
                     break;
                 case "[object HTMLVideoElement]":

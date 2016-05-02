@@ -52,6 +52,10 @@ test("va() - Basic constructor's behavior: va('video')", function (assert) {
     // Basic constructor's behavior
     assert.deepEqual(va('video'), [videoEl1, videoEl2, videoEl3, videoEl4, videoEl5]);
     assert.ok(va.players.length == 5, "total players should be 5");
+    console.log(va.players);
+    assert.deepEqual(va('video'), [videoEl1, videoEl2, videoEl3, videoEl4, videoEl5]);
+    assert.ok(va.players.length == 5, "total players should be 5");
+    console.log(va.players);
 });
 
 
@@ -60,7 +64,7 @@ test("va() - Basic constructor's behavior: va('video')", function (assert) {
 // QUnit.module("Init Object", beforeAfter);
 test("va() - Array", function (assert) {
     // Basic constructor's behavior
-    
+
     assert.deepEqual(va(['video', '#video2', '.video3']), [videoEl1, videoEl2, videoEl3]);
     assert.ok(va.players.length == 3, "total players should be 3");
     // assert.deepEqual(va('#video2'), [videoEl1, videoEl2, videoEl3], "va('#id')");
