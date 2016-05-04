@@ -14,6 +14,7 @@
     va.videos = [];
     va.fn = {
         init: function (selector) {
+            console.log((Object.prototype.toString.call(selector[0])) )
             switch (Object.prototype.toString.call(selector[0])) {
                 case "[object Array]":
                     for (var i = 0; i < selector[0].length; i++) {
@@ -30,7 +31,6 @@
                 case "[object String]":
                     var el = document.querySelectorAll(selector[0]);
                     if(el.length !== va.players.length){
-                        console.log("obj");
                         for (var i = 0; i < el.length; i++) {
                         console.log("players el == video player:", el === va.players[i]);
 
