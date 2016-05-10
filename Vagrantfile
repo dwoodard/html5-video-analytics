@@ -12,7 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # config.cache.enable :apt
     # config.cache.enable :composer
 
-    config.vm.box = "base"
+    config.vm.box = "ubuntu/trusty64"
     config.vm.network "private_network", ip: "33.33.33.10"
     config.ssh.forward_agent = true
     config.vm.hostname = "mediacloud-vm"
@@ -20,7 +20,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.network :forwarded_port, guest: 443, host: 8443
 
     #config.vm.box_url = "http://files.vagrantup.com/precise32.box"
-    config.vm.box_url = "http://files.vagrantup.com/precise64.box"
+    config.vm.box_url = "ubuntu/trusty64.box"
 
 
     config.vm.provider :virtualbox do |vb|
