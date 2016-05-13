@@ -14,11 +14,11 @@
     </style>
   </head>
   <body>
-    
+
     <div class="column_1">
-    
+
       <video id="video" src="sample.ogg.ogv" controls>
-        Your browser does not support the <code>video</code> element. 
+        Your browser does not support the <code>video</code> element.
       </video>
 
       <div class="header">Heatmap</div>
@@ -26,7 +26,7 @@
         <script>
           // hacky, but didnt want to spend a lot of time on this
           // as it's not the focus of the code, just a method to
-          // display results. 
+          // display results.
           // The vid is 46 seconds long, so I'll create 46 divs
           // representing 1 second of video...
           for(i=0;i<46;i++){
@@ -47,43 +47,43 @@
         <div class="legend_right">46 seconds</div>
         <br style="clear:both;height:0;">
       </div>
-    
+
     </div>
     <div class="column_2">
-      
+
       <div id="feedback"></div>
-      
+
     </div>
-    
-    
-    
+
+
+
     <script>
       var vonr = {
         // Set up some basic properties...
         data: [],
         video: document.getElementById("video"),
         counter: 0,
-        
+
         // These hacks are here because as I am seeking in the video
         // the seeking event is constantly firing. However, I really
         // only want to track the initial seek call, and when it ends.
         is_mouse_down: false,
         is_seeking: false,
-        
+
         // Add Event listeners to the various actions that can be
         // performed by the user to the video
         init: function(){
-          
+
           // Fire when the play button is clicked
           this.video.addEventListener("play", function(e){
             vonr.save("playing");
           }, true);
-          
+
           // Fire when the pause button is clicked
           this.video.addEventListener("pause", function(e){
             vonr.save("pause");
           }, true);
-          
+
           // Fire when the user starts scrubbing the playhead
           this.video.addEventListener("seeking", function(e){
             if(vonr.is_mouse_down && !vonr.is_seeking){
@@ -91,17 +91,17 @@
               vonr.save("seeking");
             }
           }, true);
-          
+
           // Fire when the video has ended playing
           this.video.addEventListener("ended", function(e){
             vonr.save("ended");
           }, true);
-          
+
           // Fire when the mouse is down
-          document.body.onmousedown = function(){ 
+          document.body.onmousedown = function(){
             ++vonr.is_mouse_down;
           }
-          
+
           // Fire when the mouse is up and we have been seeking
           document.body.onmouseup = function(){
             --vonr.is_mouse_down;
@@ -110,23 +110,23 @@
               vonr.save("seeked");
             }
           }
-          
+
         },
-        
+
         // Write information to an array
         save: function(action){
           action = [action, parseInt(this.video.currentTime)];
           this.data.push(action);
           // At this point, you need to determine what to do with your
-          // data. Maybe you want to ping it back to your server in 
+          // data. Maybe you want to ping it back to your server in
           // real time... for demo purposes, I'm going to map it out.
           document.getElementById("feedback").innerHTML += "@ second " + action[1] + " user " + action[0] + "<br/>"
           if(action != "seeking") this.map(action);
         },
-        
-        
-        // For demo purposes; these functions draw visuals representing the 
-        // viewers interactions with the video. These functions are thrown 
+
+
+        // For demo purposes; these functions draw visuals representing the
+        // viewers interactions with the video. These functions are thrown
         // together to get something onscreen and could be cleaned up greatly.
         // The point is tracking video, this stuff is only here to illustrate
         // the point.
@@ -139,21 +139,21 @@
         },
         map_views_counter: 0,
         map_heat_locations: new Array(46),
-        
+
         heatmap_init: function(){
-          // This is for the heatmap. It's a series of 46 divs (one div per second) 
-          // and they are all already green, but with an opacity of 0. As areas of 
-          // the video are viewed, we will increase a view count for that second, 
-          // represented with the map_heat_locations array. Initially, though, we 
+          // This is for the heatmap. It's a series of 46 divs (one div per second)
+          // and they are all already green, but with an opacity of 0. As areas of
+          // the video are viewed, we will increase a view count for that second,
+          // represented with the map_heat_locations array. Initially, though, we
           // need them to all be 0's (we haven't viewed anything yet).
           for(i=0;i<46;i++){
             this.map_heat_locations[i] = 0;
           }
         },
-        
+
         map: function(action){
-          // The main thing we need to figure out here is how long did the 
-          // interaction take place and when did it start. This information 
+          // The main thing we need to figure out here is how long did the
+          // interaction take place and when did it start. This information
           // will be turned into a width and margin-left for the div that
           // represents the interaction.
           // I would like to take a second to excuse myself for my crazy math.
@@ -177,7 +177,7 @@
           }
           this.map_last_time = current_time;
         },
-        
+
         create_map_div: function(div_width, div_margin_left, movement, current_time){
           var item = document.createElement("div");
           with(item.style){
@@ -192,7 +192,7 @@
           document.getElementById("map").appendChild(item);
           // If it's an actual "viewed" piece of data, let's put it on our heatmap!
           if(this.map_colors[movement] == "green"){
-            this.draw_heatmap(current_time); 
+            this.draw_heatmap(current_time);
           }
         },
         draw_heatmap: function(current_time){
@@ -217,9 +217,9 @@
       }
       vonr.heatmap_init();
       vonr.init();
-      
-      
+
+
     </script>
-    
+
   </body>
 </html>

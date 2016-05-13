@@ -11,24 +11,18 @@
     };
     va.version = "1.0.0";
     va.players = [];
-    va.videos = [];
+    va.sessions = [];
     va.fn = {
         init: function (selector) {
             switch (Object.prototype.toString.call(selector[0])) {
                 case "[object String]":
                         var el = document.querySelectorAll(selector[0]);
                         for (var i = 0; i < el.length; i++) {
-                            if (va.players.indexOf(el[i])) {
-                                va.players.push(el[i]);
-                            }
-                            else{
-                                console.log(el)
-                            }
+                            va.fn.addPlayer(el[i])
                         }
                     break;
                 case "[object Array]":
                     // check for object in array
-                    console.log("---->:  ", selector[0])
                     for (var i = 0; i < selector[0].length; i++) {
                         switch(typeof selector[0][i]){
                             case "object":
@@ -38,7 +32,6 @@
                                 //get playerObj
                                 var elms = document.querySelectorAll(selector[0][i].toString());
                                 for (var j = 0; j < elms.length; j++) {
-                                    console.log("-->j:", elms[j])
                                     va.fn.addPlayer(elms[j]);
                                 }
                             break;
@@ -49,16 +42,10 @@
                         }
 
                     }
-                        console.log("");
                     break;
 
                 case "[object HTMLVideoElement]":
-                    if (va.players.indexOf(selector[0])) {
-                        va.players.push(selector[0]);
-                    }
-                    else{
-                        console.log(el)
-                    }
+                    va.fn.addPlayer(selector[0])
                     break;
                 default:
                     console.log(selector)
@@ -66,15 +53,13 @@
             }
 
             //addEventListener
-            // va.fn.addEventListeners(va.players);
+            va.fn.addEventListeners(va.players);
 
             return va.players;
         },
 
         emptyPlayers: function(){
             va.players = [];
-            return va.players;
-
         },
 
         addPlayer: function(playerObj){
@@ -83,12 +68,15 @@
             if (va.players.indexOf(playerObj)) {
                 va.players.push(playerObj);
             }
-            console.log(va.players);
         },
 
-        addEventListeners: function (elements) {
+        addEventListeners: function (players) {
             for (var i = 0; i < va.players.length; i++) {
-                var el = elements[i];
+
+                //Loop through all players and add events
+
+                var el = players[i];
+                console.log(el);
                 if (!el) {
                     continue
                 }
@@ -109,13 +97,40 @@
                     "play",
                     "pause",
                     "ratechange",
-                    "volumechange"
+                    "volumechange",
+                    "click"
                 ];
 
                 events.forEach(function (event) {
-                    // el.addEventListener(event, function (e) {
-                    //     // console.log(e.type, e);
-                    // });
+
+                    el.addEventListener(event, function (e) {
+
+
+                        switch(e.type){
+                            case "loadedmetadata":
+                            va.sessions.push({"uid":window.hostname})
+                            console.log(va.sessions)
+                            break;
+
+                            case "play":
+                            break;
+
+                            case "timeupdate":
+                            break;
+
+                            case "click":
+                            console.log("you Clicked?")
+                            break;
+
+                            default:
+                            console.log("'",e.type,"'", e);
+                            break;
+                        }
+
+
+
+                    });
+
                 });
 
 
