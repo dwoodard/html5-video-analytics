@@ -100,24 +100,24 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
  //javascript
  va('#video','video','.video')
  */
-;
-
 (function (window) {
-  "use strict";
+  'use strict';
 
-  console.log("HTML5 Video Analytics");
+  var _this = this;
+
+  console.log('HTML5 Video Analytics');
 
   window.va = function (selector) {
     return new va.fn.init(arguments);
   };
 
-  va.version = "0.0.0";
+  va.version = '0.0.0';
   va.players = [];
   va.sessions = [];
   va.fn = {
     init: function init(selector) {
       switch (Object.prototype.toString.call(selector[0])) {
-        case "[object String]":
+        case '[object String]':
           var el = document.querySelectorAll(selector[0]);
 
           for (var i = 0; i < el.length; i++) {
@@ -126,16 +126,16 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
           break;
 
-        case "[object Array]":
+        case '[object Array]':
           // check for object in array
           for (i = 0; i < selector[0].length; i++) {
             switch (_typeof(selector[0][i])) {
-              case "object":
+              case 'object':
                 va.fn.addPlayer(selector[0][i]);
                 break;
 
-              case "string":
-                //get playerObj
+              case 'string':
+                // get playerObj
                 var elms = document.querySelectorAll(selector[0][i].toString());
 
                 for (var j = 0; j < elms.length; j++) {
@@ -152,14 +152,14 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
           break;
 
-        case "[object HTMLVideoElement]":
+        case '[object HTMLVideoElement]':
           va.fn.addPlayer(selector[0]);
           break;
 
         default:
           console.log(selector);
           break;
-      } //addEventListener
+      } // addEventListener
 
 
       va.fn.addEventListeners(va.players);
@@ -169,35 +169,42 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       va.players = [];
     },
     addPlayer: function addPlayer(playerObj) {
-      //add player
+      // add player
       if (va.players.indexOf(playerObj)) {
         va.players.push(playerObj);
       }
     },
     addEventListeners: function addEventListeners(players) {
-      for (var i = 0; i < va.players.length; i++) {
-        //Loop through all players and add events
+      var _loop = function _loop(i) {
+        // Loop through all players and add events
         var el = players[i];
 
         if (!el) {
-          continue;
+          return "continue";
         }
 
-        var events = ['emptied', 'loadstart', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'playing', 'ended', 'waiting', 'ended', 'durationchange', 'timeupdate', 'play', 'pause', 'ratechange', 'volumechange', 'click'];
+        var events = ['loadstart', 'progress', 'suspend', 'abort', 'error', 'emptied', 'stalled', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'playing', 'played', 'waiting', 'seeking', 'seeked', 'ended', 'durationchange', 'timeupdate', 'play', 'pause', 'ratechange', 'resize', 'volumechange'];
 
         for (var _i = 0, _events = events; _i < _events.length; _i++) {
           var event = _events[_i];
           el.addEventListener(event, function (e) {
-            // console.log(e.type);
+            // console.log(e.type)
             switch (e.type) {
               case 'loadstart':
-                va.sessions.push({el: el});
+                va.sessions.push({
+                  player: el,
+                  uid: _this.currentSrc
+                });
                 break;
 
               case 'loadedmetadata':
                 break;
 
               case 'play':
+                break;
+
+              case 'played':
+                console.log(e);
                 break;
 
               case 'pause':
@@ -209,12 +216,58 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
               case 'click':
                 break;
 
+              case 'waiting':
+                break;
+
+              case 'durationchange':
+                break;
+
+              case 'suspend':
+                break;
+
+              case 'loadeddata':
+                break;
+
+              case 'canplay':
+                break;
+
+              case 'canplaythrough':
+                break;
+
+              case 'seeking':
+                break;
+
+              case 'seeked':
+                break;
+
+              case 'playing':
+                break;
+
+              case 'resize':
+                break;
+
+              case 'volumechange':
+                break;
+
+              case 'progress':
+                break;
+
+              case 'error':
+                break;
+
               default:
-                // console.log(e.type, e);
+                // console.log(e);
+                console.log('   -------- default', e.type);
                 break;
             }
           });
         }
+      };
+
+      for (var i = 0; i < va.players.length; i++) {
+        var _ret = _loop(i);
+
+        if (_ret === "continue") continue;
       }
     }
   };
