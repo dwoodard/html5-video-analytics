@@ -14,17 +14,15 @@
     <video va id="video" controls preload="none" mediagroup="myVideoGroup">
       <source id="mp4" src="videos/sintel-trailer.mp4" type="video/mp4">
     </video>
-{{--    <video va id="video" controls preload="none" mediagroup="myVideoGroup">--}}
-{{--      <source id="mp4" src="videos/trailer.mp4" type="video/mp4">--}}
-{{--      <source id="ogv" src="http://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">--}}
-{{--    </video>--}}
+    <video va id="video" controls preload="none" mediagroup="myVideoGroup">
+      <source id="mp4" src="videos/trailer.mp4" type="video/mp4">
+      <source id="ogv" src="http://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">
+    </video>
   </div>
   
   <script src="js/va.js"></script>
  
   <script>
-    // va('#video','video','.video')
-    // va('#video,video,.video')
     va('video')
   </script>
 </body>

@@ -120,7 +120,7 @@
           // At this point, you need to determine what to do with your
           // data. Maybe you want to ping it back to your server in
           // real time... for demo purposes, I'm going to map it out.
-          document.getElementById("feedback").innerHTML += "@ second " + action[1] + " user " + action[0] + "<br/>"
+          document.getElementById("feedback").innerHTML += `@ second ${action[1]} user ${action[0]}<br/>`
           if(action != "seeking") this.map(action);
         },
 
@@ -184,10 +184,10 @@
             height = "5px";
             backgroundColor = this.map_colors[movement];
             MozBorderRadius = "2px";
-            width = div_width + "px";
+            width = `${div_width}px`;
             marginTop = "1px";
             marginBottom = "1px";
-            marginLeft = div_margin_left + "px";
+            marginLeft = `${div_margin_left}px`;
           }
           document.getElementById("map").appendChild(item);
           // If it's an actual "viewed" piece of data, let's put it on our heatmap!

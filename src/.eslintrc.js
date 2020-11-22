@@ -75,6 +75,7 @@ module.exports = {
     'no-useless-catch': 2,
     'no-useless-escape': 2,
     'no-with': 2,
+    'new-cap': 0,
     'require-yield': 2,
     'use-isnan': 2,
     'valid-typeof': 2

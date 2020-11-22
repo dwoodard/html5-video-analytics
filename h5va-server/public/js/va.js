@@ -93,6 +93,8 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /*
@@ -103,15 +105,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 (function (window) {
   'use strict';
 
-  var _this = this;
-
   console.log('HTML5 Video Analytics');
 
   window.va = function (selector) {
     return new va.fn.init(arguments);
   };
 
-  va.version = '0.0.0';
+  va.version = '0.0.1';
   va.players = [];
   va.sessions = [];
   va.fn = {
@@ -174,6 +174,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         va.players.push(playerObj);
       }
     },
+    getPlayerByEvent: function getPlayerByEvent(event) {
+      return va.sessions.filter(function (v) {
+        return v.player === event.target;
+      }).length ? va.sessions.filter(function (v) {
+        return v.player === event.target;
+      })[0] : null;
+    },
     addEventListeners: function addEventListeners(players) {
       var _loop = function _loop(i) {
         // Loop through all players and add events
@@ -191,29 +198,28 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
             // console.log(e.type)
             switch (e.type) {
               case 'loadstart':
-                va.sessions.push({
-                  player: el,
-                  uid: _this.currentSrc
-                });
+                va.sessions.push(new SessionVideo(el));
                 break;
 
               case 'loadedmetadata':
                 break;
 
               case 'play':
+                va.fn.getPlayerByEvent(e).data.push(new SessionEvent(e));
                 break;
 
               case 'played':
-                console.log(e);
                 break;
 
               case 'pause':
+                va.fn.getPlayerByEvent(e).data.push(new SessionEvent(e));
                 break;
 
               case 'timeupdate':
                 break;
 
               case 'click':
+                va.fn.getPlayerByEvent(e).data.push(new SessionEvent(e));
                 break;
 
               case 'waiting':
@@ -272,6 +278,21 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     }
   };
 })(window);
+
+var SessionVideo = function SessionVideo(el) {
+  _classCallCheck(this, SessionVideo);
+
+  this.player = el;
+  this.currentSrc = el.currentSrc;
+  this.data = [];
+};
+
+var SessionEvent = function SessionEvent(event) {
+  _classCallCheck(this, SessionEvent);
+
+  this.type = event.type;
+  this.actionTime = event.target.currentTime;
+};
 
 /***/ }),
 

@@ -11,9 +11,10 @@
   window.va = function (selector) {
     return new va.fn.init(arguments)
   }
-  va.version = '0.0.0'
+  va.version = '0.0.1'
   va.players = []
   va.sessions = []
+
   va.fn = {
     init: selector => {
       switch (Object.prototype.toString.call(selector[0])) {
@@ -67,6 +68,10 @@
         va.players.push(playerObj)
       }
     },
+    getPlayerByEvent: event => {
+      return va.sessions.filter(v => v.player === event.target).length
+        ? va.sessions.filter(v => v.player === event.target)[0] : null
+    },
     addEventListeners: players => {
       for (let i = 0; i < va.players.length; i++) {
         // Loop through all players and add events
@@ -109,25 +114,22 @@
 
             switch (e.type) {
               case 'loadstart':
-
-                va.sessions.push({
-                  player: el,
-                  uid: this.currentSrc
-                })
-
+                va.sessions.push((new SessionVideo(el)))
                 break
               case 'loadedmetadata':
                 break
               case 'play':
+                va.fn.getPlayerByEvent(e).data.push((new SessionEvent(e)))
                 break
               case 'played':
-                console.log(e)
                 break
               case 'pause':
+                va.fn.getPlayerByEvent(e).data.push((new SessionEvent(e)))
                 break
               case 'timeupdate':
                 break
               case 'click':
+                va.fn.getPlayerByEvent(e).data.push((new SessionEvent(e)))
                 break
               case 'waiting':
                 break
@@ -166,3 +168,18 @@
     }
   }
 })(window)
+
+class SessionVideo {
+  constructor (el) {
+    this.player = el
+    this.currentSrc = el.currentSrc
+    this.data = []
+  }
+}
+
+class SessionEvent {
+  constructor (event) {
+    this.type = event.type
+    this.actionTime = event.target.currentTime
+  }
+}
