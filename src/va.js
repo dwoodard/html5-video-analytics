@@ -8,19 +8,24 @@
 
   console.log('HTML5 Video Analytics')
 
-  window.va = function (selector) {
-    return new va.fn.init(arguments)
+  window.va = function (selector, options) {
+    return new va.fn.init(arguments, options)
   }
   va.version = '0.0.1'
   va.players = []
   va.sessions = []
-
+  va.options = {
+    heatMap: true
+  }
   va.fn = {
-    init: selector => {
+    init: (selector, options) => {
+      va.options = Object.assign(va.options, options)
+      console.log(va.options)
+
       switch (Object.prototype.toString.call(selector[0])) {
         case '[object String]':
           const el = document.querySelectorAll(selector[0])
-          for (var i = 0; i < el.length; i++) {
+          for (let i = 0; i < el.length; i++) {
             va.fn.addPlayer(el[i])
           }
           break
@@ -69,8 +74,9 @@
       }
     },
     getPlayerByEvent: event => {
-      return va.sessions.filter(v => v.player === event.target).length
-        ? va.sessions.filter(v => v.player === event.target)[0] : null
+      if (va.sessions.filter(v => v.player === event.target).length) {
+        return va.sessions.filter(v => v.player === event.target)[0]
+      } else { return null }
     },
     addEventListeners: players => {
       for (let i = 0; i < va.players.length; i++) {
@@ -100,11 +106,12 @@
           'seeked',
           'ended',
           'durationchange',
-          'timeupdate',
+          // 'timeupdate',
           'play',
           'pause',
           'ratechange',
-          'resize',
+          'playbackrate',
+          // 'resize',
           'volumechange'
         ]
 
@@ -119,21 +126,22 @@
               case 'loadedmetadata':
                 break
               case 'play':
-                va.fn.getPlayerByEvent(e).data.push((new SessionEvent(e)))
+                va.fn.getPlayerByEvent(e).data.push((new SessionVideoEvent(e)))
                 break
               case 'played':
                 break
               case 'pause':
-                va.fn.getPlayerByEvent(e).data.push((new SessionEvent(e)))
+                va.fn.getPlayerByEvent(e).data.push((new SessionVideoEvent(e)))
                 break
               case 'timeupdate':
                 break
               case 'click':
-                va.fn.getPlayerByEvent(e).data.push((new SessionEvent(e)))
+                va.fn.getPlayerByEvent(e).data.push((new SessionVideoEvent(e)))
                 break
               case 'waiting':
                 break
               case 'durationchange':
+                va.fn.getPlayerByEvent(e).data.push((new SessionVideoEvent(e)))
                 break
               case 'suspend':
                 break
@@ -144,16 +152,26 @@
               case 'canplaythrough':
                 break
               case 'seeking':
+                // va.fn.getPlayerByEvent(e).data.push((new SessionEvent(e)))
                 break
               case 'seeked':
+                va.fn.getPlayerByEvent(e).data.push((new SessionVideoEvent(e)))
                 break
               case 'playing':
                 break
               case 'resize':
+                va.fn.getPlayerByEvent(e).data.push((new SessionVideoEvent(e)))
+                break
+              case 'playbackrate':
+              case 'ratechange':
+                va.fn.getPlayerByEvent(e).data.push((new SessionVideoEvent(e)))
                 break
               case 'volumechange':
+                console.log(e.target.volume)
+                va.fn.getPlayerByEvent(e).data.push((new SessionVideoEvent(e)))
                 break
               case 'progress':
+                // va.fn.getPlayerByEvent(e).data.push((new SessionEvent(e)))
                 break
               case 'error':
                 break
@@ -177,9 +195,15 @@ class SessionVideo {
   }
 }
 
-class SessionEvent {
+class SessionVideoEvent {
   constructor (event) {
     this.type = event.type
-    this.actionTime = event.target.currentTime
+    this.currentTime = event.target.currentTime
+    this.event = event
+
+    this.volume = event.target.volume
+    this.playbackRate = event.target.playbackRate
+
+    // console.log(this)
   }
 }

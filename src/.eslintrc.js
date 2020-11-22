@@ -11,9 +11,7 @@ module.exports = {
   ],
   globals: {
     Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-    Bus: true,
-    _: true
+    SharedArrayBuffer: 'readonly'
   },
   parserOptions: {
     ecmaVersion: 2018,
@@ -25,7 +23,7 @@ module.exports = {
     'for-direction': 2,
     'getter-return': 2,
     'no-async-promise-executor': 2,
-    'no-case-declarations': 2,
+    'no-case-declarations': 0,
     'no-class-assign': 2,
     'no-compare-neg-zero': 2,
     'no-cond-assign': 2,
@@ -78,6 +76,7 @@ module.exports = {
     'new-cap': 0,
     'require-yield': 2,
     'use-isnan': 2,
-    'valid-typeof': 2
+    'valid-typeof': 2,
+    'multiline-ternary': 1
   }
 }

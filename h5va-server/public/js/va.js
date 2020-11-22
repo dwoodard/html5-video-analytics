@@ -107,21 +107,27 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
   console.log('HTML5 Video Analytics');
 
-  window.va = function (selector) {
-    return new va.fn.init(arguments);
+  window.va = function (selector, options) {
+    return new va.fn.init(arguments, options);
   };
 
   va.version = '0.0.1';
   va.players = [];
   va.sessions = [];
+  va.options = {
+    heatMap: true
+  };
   va.fn = {
-    init: function init(selector) {
+    init: function init(selector, options) {
+      va.options = Object.assign(va.options, options);
+      console.log(va.options);
+
       switch (Object.prototype.toString.call(selector[0])) {
         case '[object String]':
           var el = document.querySelectorAll(selector[0]);
 
-          for (var i = 0; i < el.length; i++) {
-            va.fn.addPlayer(el[i]);
+          for (var _i = 0; _i < el.length; _i++) {
+            va.fn.addPlayer(el[_i]);
           }
 
           break;
@@ -175,25 +181,31 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
     },
     getPlayerByEvent: function getPlayerByEvent(event) {
-      return va.sessions.filter(function (v) {
+      if (va.sessions.filter(function (v) {
         return v.player === event.target;
-      }).length ? va.sessions.filter(function (v) {
-        return v.player === event.target;
-      })[0] : null;
+      }).length) {
+        return va.sessions.filter(function (v) {
+          return v.player === event.target;
+        })[0];
+      } else {
+        return null;
+      }
     },
     addEventListeners: function addEventListeners(players) {
-      var _loop = function _loop(i) {
+      var _loop = function _loop(_i2) {
         // Loop through all players and add events
-        var el = players[i];
+        var el = players[_i2];
 
         if (!el) {
           return "continue";
         }
 
-        var events = ['loadstart', 'progress', 'suspend', 'abort', 'error', 'emptied', 'stalled', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'playing', 'played', 'waiting', 'seeking', 'seeked', 'ended', 'durationchange', 'timeupdate', 'play', 'pause', 'ratechange', 'resize', 'volumechange'];
+        var events = ['loadstart', 'progress', 'suspend', 'abort', 'error', 'emptied', 'stalled', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'playing', 'played', 'waiting', 'seeking', 'seeked', 'ended', 'durationchange', // 'timeupdate',
+        'play', 'pause', 'ratechange', 'playbackrate', // 'resize',
+        'volumechange'];
 
-        for (var _i = 0, _events = events; _i < _events.length; _i++) {
-          var event = _events[_i];
+        for (var _i3 = 0, _events = events; _i3 < _events.length; _i3++) {
+          var event = _events[_i3];
           el.addEventListener(event, function (e) {
             // console.log(e.type)
             switch (e.type) {
@@ -205,27 +217,28 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
                 break;
 
               case 'play':
-                va.fn.getPlayerByEvent(e).data.push(new SessionEvent(e));
+                va.fn.getPlayerByEvent(e).data.push(new SessionVideoEvent(e));
                 break;
 
               case 'played':
                 break;
 
               case 'pause':
-                va.fn.getPlayerByEvent(e).data.push(new SessionEvent(e));
+                va.fn.getPlayerByEvent(e).data.push(new SessionVideoEvent(e));
                 break;
 
               case 'timeupdate':
                 break;
 
               case 'click':
-                va.fn.getPlayerByEvent(e).data.push(new SessionEvent(e));
+                va.fn.getPlayerByEvent(e).data.push(new SessionVideoEvent(e));
                 break;
 
               case 'waiting':
                 break;
 
               case 'durationchange':
+                va.fn.getPlayerByEvent(e).data.push(new SessionVideoEvent(e));
                 break;
 
               case 'suspend':
@@ -241,21 +254,32 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
                 break;
 
               case 'seeking':
+                // va.fn.getPlayerByEvent(e).data.push((new SessionEvent(e)))
                 break;
 
               case 'seeked':
+                va.fn.getPlayerByEvent(e).data.push(new SessionVideoEvent(e));
                 break;
 
               case 'playing':
                 break;
 
               case 'resize':
+                va.fn.getPlayerByEvent(e).data.push(new SessionVideoEvent(e));
+                break;
+
+              case 'playbackrate':
+              case 'ratechange':
+                va.fn.getPlayerByEvent(e).data.push(new SessionVideoEvent(e));
                 break;
 
               case 'volumechange':
+                console.log(e.target.volume);
+                va.fn.getPlayerByEvent(e).data.push(new SessionVideoEvent(e));
                 break;
 
               case 'progress':
+                // va.fn.getPlayerByEvent(e).data.push((new SessionEvent(e)))
                 break;
 
               case 'error':
@@ -270,8 +294,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         }
       };
 
-      for (var i = 0; i < va.players.length; i++) {
-        var _ret = _loop(i);
+      for (var _i2 = 0; _i2 < va.players.length; _i2++) {
+        var _ret = _loop(_i2);
 
         if (_ret === "continue") continue;
       }
@@ -287,11 +311,14 @@ var SessionVideo = function SessionVideo(el) {
   this.data = [];
 };
 
-var SessionEvent = function SessionEvent(event) {
-  _classCallCheck(this, SessionEvent);
+var SessionVideoEvent = function SessionVideoEvent(event) {
+  _classCallCheck(this, SessionVideoEvent);
 
   this.type = event.type;
-  this.actionTime = event.target.currentTime;
+  this.currentTime = event.target.currentTime;
+  this.event = event;
+  this.volume = event.target.volume;
+  this.playbackRate = event.target.playbackRate; // console.log(this)
 };
 
 /***/ }),
