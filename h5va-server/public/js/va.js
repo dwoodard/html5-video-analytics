@@ -185,7 +185,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           continue;
         }
 
-        var events = ["emptied", "loadstart", "loadedmetadata", "loadeddata", "canplay", "canplaythrough", "playing", "ended", "waiting", "ended", "durationchange", "timeupdate", "play", "pause", "ratechange", "volumechange", "click"];
+        var events = ['emptied', 'loadstart', 'loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough', 'playing', 'ended', 'waiting', 'ended', 'durationchange', 'timeupdate', 'play', 'pause', 'ratechange', 'volumechange', 'click'];
 
         for (var _i = 0, _events = events; _i < _events.length; _i++) {
           var event = _events[_i];
@@ -201,7 +201,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
                 break;
 
               case 'play':
-                console.log('you played?');
+                console.log('play');
+                break;
+
+              case 'pause':
+                console.log('pause');
                 break;
 
               case 'timeupdate':
@@ -212,7 +216,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
                 break;
 
               default:
-                console.log(e.type, e);
+                // console.log(e.type, e);
                 break;
             }
           });

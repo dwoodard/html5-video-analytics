@@ -80,27 +80,27 @@
         if (!el) {
           continue
         }
-        
-        var events = [
-          "emptied",
-          "loadstart",
-          "loadedmetadata",
-          "loadeddata",
-          "canplay",
-          "canplaythrough",
-          "playing",
-          "ended",
-          "waiting",
-          "ended",
-          "durationchange",
-          "timeupdate",
-          "play",
-          "pause",
-          "ratechange",
-          "volumechange",
-          "click"
+  
+        let events = [
+          'emptied',
+          'loadstart',
+          'loadedmetadata',
+          'loadeddata',
+          'canplay',
+          'canplaythrough',
+          'playing',
+          'ended',
+          'waiting',
+          'ended',
+          'durationchange',
+          'timeupdate',
+          'play',
+          'pause',
+          'ratechange',
+          'volumechange',
+          'click'
         ];
-        
+  
         for (const event of events) {
           
           el.addEventListener(event, e => {
@@ -113,7 +113,10 @@
               case 'loadedmetadata':
                 break;
               case 'play':
-                console.log('you played?');
+                console.log('play');
+                break;
+              case 'pause':
+                console.log('pause');
                 break;
               case 'timeupdate':
                 break;
@@ -121,7 +124,7 @@
                 console.log('you Clicked?');
                 break;
               default:
-                console.log(e.type, e);
+                // console.log(e.type, e);
                 break;
             }
   
