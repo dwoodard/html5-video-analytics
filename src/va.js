@@ -16,12 +16,11 @@
   va.sessions = [];
   va.fn = {
     init: selector => {
-      let i;
-      
+     
       switch (Object.prototype.toString.call(selector[0])) {
         case "[object String]":
           let el = document.querySelectorAll(selector[0]);
-          for (i = 0; i < el.length; i++) {
+          for (var i = 0; i < el.length; i++) {
             va.fn.addPlayer(el[i])
           }
           break;
@@ -113,21 +112,21 @@
               case 'loadedmetadata':
                 break;
               case 'play':
-                console.log('play');
+                console.log('play', e);
                 break;
               case 'pause':
-                console.log('pause');
+                console.log('pause', e);
                 break;
               case 'timeupdate':
                 break;
               case 'click':
-                console.log('you Clicked?');
+                console.log('you Clicked?', e);
                 break;
               default:
-                // console.log(e.type, e);
+                console.log(e.type, e);
                 break;
             }
-  
+
           });
           
         }

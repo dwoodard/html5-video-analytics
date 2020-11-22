@@ -116,13 +116,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   va.sessions = [];
   va.fn = {
     init: function init(selector) {
-      var i;
-
       switch (Object.prototype.toString.call(selector[0])) {
         case "[object String]":
           var el = document.querySelectorAll(selector[0]);
 
-          for (i = 0; i < el.length; i++) {
+          for (var i = 0; i < el.length; i++) {
             va.fn.addPlayer(el[i]);
           }
 
@@ -190,29 +188,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         for (var _i = 0, _events = events; _i < _events.length; _i++) {
           var event = _events[_i];
           el.addEventListener(event, function (e) {
+            // console.log(e.type);
             switch (e.type) {
               case 'loadstart':
-                va.sessions.push({
-                  'uid': window.location.hostname
-                });
+                va.sessions.push({el: el});
                 break;
 
               case 'loadedmetadata':
                 break;
 
               case 'play':
-                console.log('play');
                 break;
 
               case 'pause':
-                console.log('pause');
                 break;
 
               case 'timeupdate':
                 break;
 
               case 'click':
-                console.log('you Clicked?');
                 break;
 
               default:
