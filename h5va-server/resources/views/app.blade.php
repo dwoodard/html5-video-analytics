@@ -17,11 +17,11 @@
       <p>Your user agent does not support the HTML5 Video element.</p>
     </video>
   
-    <video va id="video1" controls="" preload="none" mediagroup="myVideoGroup" poster="http://media.w3.org/2010/05/bunny/poster.png">
-      <source id="mp4" src="http://media.w3.org/2010/05/bunny/trailer.mp4" type="video/mp4">
-      <source id="ogv" src="http://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">
-      <p>Your user agent does not support the HTML5 Video element.</p>
-    </video>
+{{--    <video va id="video1" controls="" preload="none" mediagroup="myVideoGroup" poster="http://media.w3.org/2010/05/bunny/poster.png">--}}
+{{--      <source id="mp4" src="http://media.w3.org/2010/05/bunny/trailer.mp4" type="video/mp4">--}}
+{{--      <source id="ogv" src="http://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">--}}
+{{--      <p>Your user agent does not support the HTML5 Video element.</p>--}}
+{{--    </video>--}}
   </div>
   
   <script src="js/va.js"></script>
