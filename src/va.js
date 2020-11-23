@@ -20,7 +20,6 @@
   va.fn = {
     init: (selector, options) => {
       va.options = Object.assign(va.options, options)
-      console.log(va.options)
 
       switch (Object.prototype.toString.call(selector[0])) {
         case '[object String]':
@@ -68,15 +67,14 @@
     },
     addPlayer: playerObj => {
       // add player
-
       if (va.players.indexOf(playerObj)) {
         va.players.push(playerObj)
       }
     },
     getPlayerByEvent: event => {
-      if (va.sessions.filter(v => v.player === event.target).length) {
-        return va.sessions.filter(v => v.player === event.target)[0]
-      } else { return null }
+      return va.sessions.filter(v => v.player === event.target).length
+        ? va.sessions.filter(v => v.player === event.target)[0]
+        : null
     },
     addEventListeners: players => {
       for (let i = 0; i < va.players.length; i++) {
@@ -162,7 +160,6 @@
               case 'resize':
                 va.fn.getPlayerByEvent(e).data.push((new SessionVideoEvent(e)))
                 break
-              case 'playbackrate':
               case 'ratechange':
                 va.fn.getPlayerByEvent(e).data.push((new SessionVideoEvent(e)))
                 break
@@ -184,6 +181,7 @@
         }
       }
     }
+
   }
 })(window)
 
@@ -197,13 +195,13 @@ class SessionVideo {
 
 class SessionVideoEvent {
   constructor (event) {
+    this.event = event
     this.type = event.type
     this.currentTime = event.target.currentTime
-    this.event = event
-
+    // this.duration = event.target.duration
     this.volume = event.target.volume
     this.playbackRate = event.target.playbackRate
-
+    // this.timeleft = event.target.duration ? event.target.duration - event.target.currentTime : null
     // console.log(this)
   }
 }

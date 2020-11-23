@@ -120,7 +120,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
   va.fn = {
     init: function init(selector, options) {
       va.options = Object.assign(va.options, options);
-      console.log(va.options);
 
       switch (Object.prototype.toString.call(selector[0])) {
         case '[object String]':
@@ -181,15 +180,11 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       }
     },
     getPlayerByEvent: function getPlayerByEvent(event) {
-      if (va.sessions.filter(function (v) {
+      return va.sessions.filter(function (v) {
         return v.player === event.target;
-      }).length) {
-        return va.sessions.filter(function (v) {
-          return v.player === event.target;
-        })[0];
-      } else {
-        return null;
-      }
+      }).length ? va.sessions.filter(function (v) {
+        return v.player === event.target;
+      })[0] : null;
     },
     addEventListeners: function addEventListeners(players) {
       var _loop = function _loop(_i2) {
@@ -268,7 +263,6 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
                 va.fn.getPlayerByEvent(e).data.push(new SessionVideoEvent(e));
                 break;
 
-              case 'playbackrate':
               case 'ratechange':
                 va.fn.getPlayerByEvent(e).data.push(new SessionVideoEvent(e));
                 break;
@@ -314,11 +308,13 @@ var SessionVideo = function SessionVideo(el) {
 var SessionVideoEvent = function SessionVideoEvent(event) {
   _classCallCheck(this, SessionVideoEvent);
 
-  this.type = event.type;
-  this.currentTime = event.target.currentTime;
   this.event = event;
+  this.type = event.type;
+  this.currentTime = event.target.currentTime; // this.duration = event.target.duration
+
   this.volume = event.target.volume;
-  this.playbackRate = event.target.playbackRate; // console.log(this)
+  this.playbackRate = event.target.playbackRate; // this.timeleft = event.target.duration ? event.target.duration - event.target.currentTime : null
+  // console.log(this)
 };
 
 /***/ }),

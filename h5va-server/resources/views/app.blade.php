@@ -11,13 +11,13 @@
 
   <h2>HTML 5 Video Analytics</h2>
   <div class="videos">
-    <video va id="video" controls preload="none" mediagroup="myVideoGroup">
+    <video va id="video" autoplay controls preload="none" mediagroup="myVideoGroup">
       <source id="mp4" src="videos/sintel-trailer.mp4" type="video/mp4">
     </video>
-    <video va id="video" controls preload="none" mediagroup="myVideoGroup">
-      <source id="mp4" src="videos/trailer.mp4" type="video/mp4">
-      <source id="ogv" src="http://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">
-    </video>
+{{--    <video va id="video" controls preload="none" mediagroup="myVideoGroup">--}}
+{{--      <source id="mp4" src="videos/trailer.mp4" type="video/mp4">--}}
+{{--      <source id="ogv" src="http://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">--}}
+{{--    </video>--}}
   </div>
   
   <script src="js/va.js"></script>
